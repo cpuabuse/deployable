@@ -7,9 +7,11 @@ A module creating the environment, which initializes the deployments from comman
 from argparse import ArgumentParser, Namespace  # For parsing arguments
 from defaults import default_config_path # For using the default value in Environment creation
 from deployment import Deployment  # For creating deployments
+from error import report_error # Error reporting
 from os import getcwd  # For path resolution
 from os.path import join # For path resolution
-from typing import List  # For typing
+from yaml import BaseLoader, load # To convert yaml to dict 
+from typing import List # For typing
 
 """
 Class for specifying the environment of operation.
@@ -35,8 +37,14 @@ class Environment:
 		args = parser.parse_args()
 
 		# Create deployments
-		for config_path in args.config:
-			self.deployment.append(Deployment(config_path,config_path))
+		try:
+			for config_path in args.config:
+				with open(config_path) as config_file:
+					self.deployment.append(Deployment(config_path, load(config_file, Loader=BaseLoader)))
+		except OSError:
+			report_error("io", config_path)
+		except TypeError:
+			report_error("parsing", config_path)
 
 """
 Entrypoint.
