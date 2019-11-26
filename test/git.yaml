@@ -1,0 +1,35 @@
+# Constants
+const:
+  repo_test_one: &repo_test_one devenv-test-one
+  repo_test_two: &repo_test_two devenv-test-two
+  source_hello: &source_hello hello.txt
+  source_gratis: &source_gratis latin/gratis.txt
+  target_hi: &target_hi informal/hi.txt
+
+# Variables
+vars:
+  git_output: null
+
+# Aliases
+alias:
+  - &repos
+    - *repo_test_one
+    - *repo_test_two
+  - &files
+    - [*source_hello, *source_hello]
+    - [*source_gratis, *source_gratis]
+    - [*source_hello, *target_hi]
+  - &url_template "https://github.com/cpuabuse/{{ stage.for }}.git"
+  - &out_template "var.git_output.{{ stage.for }}"
+
+# Stages
+stage:
+  - git: Test sample text files deployment
+    repo: !template [*url_template]
+    files: *files
+    out: !template [*out_template]
+    for: *repos
+
+  - echo: Show git output
+    text: !template [*out_template]
+    for: *repos

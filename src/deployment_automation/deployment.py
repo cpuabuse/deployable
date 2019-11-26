@@ -19,12 +19,9 @@ class Deployment:
 			# Verify the consistency of data to satisfy the stage
 			if type(stage) is not dict:
 				raise TypeError
-			if "name" not in stage:
-				raise KeyError
-			if type(stage["name"]) is not str:
-				raise TypeError
+			if "name" in stage:
+				if type(stage["name"]) is not str:
+					raise TypeError
 
 			# Append to self
 			self.stage.append(stage)
-
-		
