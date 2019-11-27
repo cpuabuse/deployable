@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/product.schema.json",
+  "title": "Deployment",
+  "description": "A schema for deployment configurations",
+  "type": "object",
+  "properties": {
+    "const": {
+      "description": "Name of the product",
+      "type": ["null", "object"]
+    },
+    "option": {
+      "description": "Name of the product",
+      "type": ["array", "null", "object"],
+      "additionalProperties": false
+    },
+    "var": {
+      "description": "Name of the product",
+      "type": ["array", "null", "object"]
+    },
+    "alias": {
+      "description": "Name of the product",
+      "type": ["array", "null"]
+    },
+    "stage": {
+      "description": "Name of the product",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": ["array", "object"],
+        "properties": {
+          "for": {
+            "description": "Name of the product",
+            "type": ["array"]
+          },
+          "from": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          },
+          "clone": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          },
+          "push": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          },
+          "out": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          },
+          "target": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          },
+          "copy": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          },
+          "echo": {
+            "description": "Name of the product",
+            "type": ["array", "string"]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["stage"]
+}

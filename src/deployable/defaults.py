@@ -2,8 +2,9 @@
 Module for storing defaults for the package.
 """
 
-# Default configuration file name
+# Default paths
 default_config_path = "deploy.yml"
+default_work_path = ""
 
 # Default name for the stage class
 default_stage_name = "No stage name"

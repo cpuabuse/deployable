@@ -1,13 +1,17 @@
 # Constants
 const:
-  repo_test_one: &repo_test_one devenv-test-one
-  repo_test_two: &repo_test_two devenv-test-two
-  source_hello: &source_hello hello.txt
-  source_gratis: &source_gratis latin/gratis.txt
-  target_hi: &target_hi informal/hi.txt
+  repo_test_one: &repo_test_one "devenv-test-one"
+  repo_test_two: &repo_test_two "devenv-test-two"
+  source_hello: &source_hello "hello.txt"
+  source_gratis: &source_gratis "latin/gratis.txt"
+  target_hi: &target_hi "informal/hi.txt"
+
+# Deployment options
+option:
+  work_dir: "temp"
 
 # Variables
-vars:
+var:
   git_output: null
 
 # Aliases
@@ -16,20 +20,29 @@ alias:
     - *repo_test_one
     - *repo_test_two
   - &files
-    - [*source_hello, *source_hello]
-    - [*source_gratis, *source_gratis]
-    - [*source_hello, *target_hi]
-  - &url_template "https://github.com/cpuabuse/{{ stage.for }}.git"
-  - &out_template "var.git_output.{{ stage.for }}"
+    - src: *source_hello
+      target: *source_hello
+    - src: *source_gratis
+      target: *source_gratis
+    - src: *source_hello
+      target: *target_hi
 
 # Stages
 stage:
-  - git: Test sample text files deployment
-    repo: !template [*url_template]
-    files: *files
-    out: !template [*out_template]
+  - clone: !template ["https://github.com/cpuabuse/{{ stage.for }}.git"]
     for: *repos
 
-  - echo: Show git output
-    text: !template [*out_template]
+  - copy: !template ["..{{ system['sep'] }}{{ stage['for'][1]['src] }}"]
+    target:
+      !template [
+        "{{ stage['for'][0] }}{{ system['sep'] }}{{ stage['for'][1]['target'] }}",
+      ]
+    for: !combine [*repos, *files]
+
+  - push: "Change: Test files"
+    for: *repos
+    from: !template ["{{ stage['for'] }}"]
+    out: !template ["{{ stage['for'] }}"]
+
+  - echo: !template ["{{ out[stage['for']] }}"]
     for: *repos

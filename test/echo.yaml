@@ -1,2 +1,2 @@
-- name: Echo test
-  echo: Hello
+stage:
+  - echo: Hello world!
