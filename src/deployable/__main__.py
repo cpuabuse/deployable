@@ -11,7 +11,7 @@ from report import report_error # Error reporting
 from os import getcwd  # For path resolution
 from os.path import join, sep # For path resolution, and system vars
 from yaml import BaseLoader, load # To convert yaml to dict 
-from typing import Dict, List # For typing
+from typing import Dict, List  # For typing
 
 """
 Class for specifying the environment of operation.
@@ -57,4 +57,8 @@ def main() -> None:
 	env = Environment()
 
 if __name__ == "__main__":
+	# Set package
+	__package__ = "test"
+
+	# Call main method
 	main()

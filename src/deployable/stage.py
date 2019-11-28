@@ -2,7 +2,7 @@
 Module containing the base stage class.
 """
 
-from ..deployment import default_stage_name
+from defaults import default_stage_name
 from typing import Any, Dict  # For typing
 
 class Stage:
