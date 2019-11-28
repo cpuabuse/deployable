@@ -9,10 +9,16 @@
       "description": "Name of the product",
       "type": ["null", "object"]
     },
-    "option": {
+    "options": {
       "description": "Name of the product",
       "type": ["array", "null", "object"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "properties": {
+        "work_dir": {
+          "description": "Name of the product",
+          "type": ["null", "string"]
+        }
+      }
     },
     "var": {
       "description": "Name of the product",

@@ -1,64 +1,48 @@
-#!/usr/bin/env python3
 """
-A module creating the environment, which initializes the deployments from command line arguments.
+Main module for the deployable project.
 """
 
-# Imports
+# Bootstrap to be able to perform absolute imports as standalone code
+if __name__ == "__main__":
+	from sys import path
+	from pathlib import PurePath
+	current_path: str = PurePath(__file__).parent.parent.as_posix()
+	if current_path not in path:
+		path.append(current_path)
+
 from argparse import ArgumentParser, Namespace  # For parsing arguments
 from defaults import default_config_path # For using the default value in Environment creation
-from deployment import Deployment  # For creating deployments
-from report import report_error # Error reporting
-from os import getcwd  # For path resolution
-from os.path import join, sep # For path resolution, and system vars
-from yaml import BaseLoader, load # To convert yaml to dict 
-from typing import Dict, List  # For typing
+from deployable.environment.file_environment import FileEnvironment # For creating of environment
+from typing import Any, List, Tuple  # For typing
 
 """
-Class for specifying the environment of operation.
+Retrieves arguments from command line.
 """
-class Environment:
-	# Array of deployments
-	deployment: List[Deployment] = list()
-	system: Dict[str, str] = {
-		sep: sep
-	}
+def get_args() -> tuple:
+	# Create parser
+	parser = ArgumentParser(description='Arguments for deployment-automation.')
 
-	"""
-	Parses and return the command line arguments.
-	"""
-	def __init__(self):
-		# Default config file name
-		global default_config_path
+	# Add arguments
+	parser.add_argument("-c", "--config", nargs="*", type=str, help="location of the configuration file(s)", default=[default_config_path])
+	parser.add_argument("-d", "--dry", help="if specified, the stages would not execute, only evaluate the directives", default=False, action="store_true")
+	
+	# Generate the args object
+	args = parser.parse_args()
 
-		# Create parser
-		parser = ArgumentParser(description='Arguments for deployment-automation.')
-
-		# Add arguments
-		parser.add_argument("-c", "--config", nargs="*", type=str, help="location of the configuration file(s)", default=[default_config_path])
-		
-		# Generate the args object
-		args = parser.parse_args()
-
-		# Create deployments
-		try:
-			for config_path in args.config:
-				with open(config_path) as config_file:
-					self.deployment.append(Deployment(config_path, load(config_file, Loader=BaseLoader), self.system))
-		except OSError:
-			report_error("io", config_path)
-		except [TypeError, ValueError]:
-			report_error("parsing", config_path)
-
+	return args.config, args.dry
 """
 Entrypoint.
 """
 def main() -> None:
+	# Get command line args
+	config: List(str)
+	dry: bool
+	config, dry = get_args()
+
 	# Create an environment
-	env = Environment()
+	env = FileEnvironment()
+	print(env)
 
+# Call main method
 if __name__ == "__main__":
-	# Set package
-	__package__ = "test"
-
-	# Call main method
 	main()

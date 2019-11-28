@@ -21,5 +21,9 @@ Stage is an object, member of `stage` array in the root of the deployment config
 
 1. The stage should be executable with only a primary directive, where the value is of type string.
 1. The secondary directives should have separate functionality from the primary directive itself. For example, for `publish_file` primary directive, the value for `publish_file` is to be a file path. Adding `file2` directive for second file to publish, should not be done. Iterations should be implemented isntead.
-1. The stage should process only one primary directive, while others should be ignored.
-1. The directive keys should be short and simple.
+1. The stage should process only one _primary_ directive, while other should be ignored.
+
+### Naming
+
+1. The keys should be short, and simple.
+1. The key should be in singular form, unless the plural form is predominantly used.

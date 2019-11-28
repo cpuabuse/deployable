@@ -2,10 +2,9 @@
 Module providing operation of the deployments.
 """
 
-from defaults import default_work_path # For Deployment construction
-from report import report_error # Error reporting
-from echo import Echo # For stage
-from stage import Stage
+from default import default_work_path # For Deployment construction
+from ..report import report_error # Error reporting
+from ..stage import Echo, Stage # For stage
 from typing import Any, Dict, List  # For typing
 
 """

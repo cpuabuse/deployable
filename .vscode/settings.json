@@ -2,5 +2,10 @@
   "yaml.schemas": {
     "src/schema/deployment.json": "/*"
   },
-  "yaml.customTags": ["!template sequence", "!combine sequence"]
+  "yaml.customTags": [
+    "!template sequence",
+    "!combine sequence"
+  ],
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true
 }

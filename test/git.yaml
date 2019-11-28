@@ -7,7 +7,7 @@ const:
   target_hi: &target_hi "informal/hi.txt"
 
 # Deployment options
-option:
+options:
   work_dir: "temp"
 
 # Variables
@@ -29,9 +29,11 @@ alias:
 
 # Stages
 stage:
+  # Clone
   - clone: !template ["https://github.com/cpuabuse/{{ stage.for }}.git"]
     for: *repos
 
+  # Copy
   - copy: !template ["..{{ system['sep'] }}{{ stage['for'][1]['src] }}"]
     target:
       !template [
@@ -39,10 +41,12 @@ stage:
       ]
     for: !combine [*repos, *files]
 
+  # Push
   - push: "Change: Test files"
     for: *repos
     from: !template ["{{ stage['for'] }}"]
     out: !template ["{{ stage['for'] }}"]
 
+  # Output
   - echo: !template ["{{ out[stage['for']] }}"]
     for: *repos
