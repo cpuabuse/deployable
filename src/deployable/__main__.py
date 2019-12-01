@@ -40,7 +40,7 @@ def main() -> None:
 	config, dry = get_args()
 
 	# Create an environment
-	env = FileEnvironment()
+	env = FileEnvironment(config, dry)
 	print(env)
 
 # Call main method

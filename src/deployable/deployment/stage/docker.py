@@ -1,3 +1,3 @@
 """
-A file providing functionality to publish to docker.
+A module providing functionality to publish to docker.
 """

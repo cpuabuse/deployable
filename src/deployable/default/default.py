@@ -2,9 +2,7 @@
 Module for storing defaults for the package.
 """
 
-# Default paths
 
-default_work_path = ""
 
 # IO error message
 error_break = " - "

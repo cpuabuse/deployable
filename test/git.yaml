@@ -30,7 +30,7 @@ alias:
 # Stages
 stage:
   # Clone
-  - clone: !template ["https://github.com/cpuabuse/{{ stage.for }}.git"]
+  - clone: !template ["https://github.com/cpuabuse/{{ stage['for'] }}.git"]
     for: *repos
 
   # Copy

@@ -14,7 +14,7 @@ from typing import Dict, List  # For typing
 """
 Class for specifying the environment of operation.
 """
-class Environment:
+class FileEnvironment:
 	# Array of deployments
 	deployment: List[Deployment] = list()
 	system: Dict[str, str] = {

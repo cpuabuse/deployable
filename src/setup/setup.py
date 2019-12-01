@@ -9,3 +9,5 @@ __license__ = "MIT"
 __version__ = "0.0.1"
 __email__ = "cpuabuse@gmail.com"
 __status__ = "Development"
+
+# Minimum python version is 3.6

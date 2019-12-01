@@ -2,7 +2,7 @@
 Stage printing a message to console.
 """
 
-from stage import Stage # To extend
+from deployable.deployment.stage.stage import Stage # To extend
 from typing import Any, Dict # or typing
 
 
@@ -11,5 +11,8 @@ class Echo(Stage):
 		# Call superconstructor
 		super().__init__(arg, config)
 
-	def execute(self):
+	def run(self):
+		print(self.arg)
+
+	def dry(self):
 		print(self.arg)

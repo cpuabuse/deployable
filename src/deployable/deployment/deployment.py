@@ -1,10 +1,10 @@
 """
 Module providing operation of the deployments.
 """
-
-from default import default_work_path # For Deployment construction
-from ..report import report_error # Error reporting
-from ..stage import Echo, Stage # For stage
+from deployable.deployment.defaults import default_work_path # For default config options
+from deployable.deployment.stage.stage import Stage # For stage
+from deployable.deployment.stage.echo import Echo # For stage
+from deployable.report.error import report_error # Error reporting
 from typing import Any, Dict, List  # For typing
 
 """
@@ -28,12 +28,12 @@ class Deployment:
 				config["const"] = dict()
 
 		# Initialize option
-		config["option"] = dict()
-		if "option" in config:
-			if type(config["option"]) is dict:
-				self.config["option"] = config["option"]
+		config["options"] = dict()
+		if "options" in config:
+			if type(config["options"]) is dict:
+				self.config["options"] = config["options"]
 			else:
-				if type(config["option"]) is not None:
+				if type(config["options"]) is not None:
 					raise TypeError
 		if "work_dir" not in self.config["options"]:
 			self.config["options"]["work_dir"] = default_work_path

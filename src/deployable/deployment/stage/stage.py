@@ -2,9 +2,13 @@
 Module containing the base stage class.
 """
 
-from defaults import default_stage_name
 from typing import Any, Dict  # For typing
 
+"""
+Base stage class.
+
+All of the classes extending this must provide the "run" and "dry" methods.
+"""
 class Stage:
 	arg: str
 	config: Dict[str, Any]
