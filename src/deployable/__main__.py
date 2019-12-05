@@ -23,7 +23,7 @@ from typing import Any, List, Set, Tuple  # For typing
 """
 Retrieves arguments from command line.
 """
-def get_args() -> tuple:
+def get_args() -> Tuple[Any]:
 	# Create parser and groups
 	parser = ArgumentParser(description=description, epilog=epilog, formatter_class=RawDescriptionHelpFormatter)
 
@@ -34,7 +34,7 @@ def get_args() -> tuple:
 		type_override_group.add_argument(f"-{type_item[0]}", f"--{type_item}", action="store_true", default=False, help=get_help(type_item))
 	
 	# Add normal arguments
-	parser.add_argument("-c", "--config", nargs="*", type=str, help=get_help("config"))
+	parser.add_argument("-c", "--config", nargs="*", type=str, help=get_help("config"), default=[default_config_path])
 	parser.add_argument("-d", "--dry", help=get_help("dry"), default=False, action="store_true")
 	parser.add_argument("-e", "--environment", type=str, help=get_help("environment"))
 
@@ -46,8 +46,15 @@ def get_args() -> tuple:
 	if args.type != parser.get_default("type"):
 		for i in range(min(len(args.type), len(args.config))):
 			arg_type[i] = args.type[i]
-	# TODO: Add type processing for overrides
-		
+	force_types: List[str] = [type_item for type_item in types if getattr(args, type_item) == True]
+	if len(force_types) == 1:
+		for i in range(len(arg_type)):
+			arg_type[i] = force_types[0]
+	else:
+		# Perform type guessing
+		for i in range(len(arg_type)):
+			arg_type[i] = guess_type(args.config[i])
+
 	# Determine environment
 	environment: str = None
 	if args.environment == parser.get_default("environment"):
@@ -59,7 +66,22 @@ def get_args() -> tuple:
 		environment = args.environment
 
 	# Return the args
-	return args.config,	args.dry, environment, arg_type
+	return args.config, args.dry, environment, arg_type
+	
+"""
+Guesses the type of the string.
+Performs the check for file the last.
+"""
+def guess_type(text: str):
+	for type_item in types:
+		if type_item != file_id:
+			if types[type_item]["validator"](text):
+				return type_item
+	if types[file_id]["validator"](text):
+		return file_id
+	else:
+		return None
+
 """
 Entrypoint.
 """
@@ -68,12 +90,9 @@ def main() -> None:
 	config: List(str)
 	dry: bool
 	env_path: str
-	config, dry, env_path, url = get_args()
+	config, dry, env_path, type_of_config = get_args()
 
-	if url is None:
-		# Create an environment
-		env = FileEnvironment(config, env_path)
-		print(env)
+	print("Debug: exiting")
 
 # Call main method
 if __name__ == "__main__":
