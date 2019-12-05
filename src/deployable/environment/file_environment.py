@@ -4,39 +4,46 @@ A module creating the environment, which initializes the deployments from comman
 """
 
 # Imports
-from deployment import Deployment  # For creating deployments
-from report import report_error # Error reporting
-from os import getcwd  # For path resolution
+from deployable.environment.environment import Environment # For class extension
+from deployable.report.error import report_error # Error reporting
 from os.path import join, sep # For path resolution, and system vars
+from typing import Any, List, Dict # For typing
 from yaml import BaseLoader, load # To convert yaml to dict 
-from typing import Dict, List  # For typing
+
 
 """
 Class for specifying the environment of operation.
 """
-class FileEnvironment:
-	# Array of deployments
-	deployment: List[Deployment] = list()
-	system: Dict[str, str] = {
-		sep: sep
-	}
-
+class FileEnvironment(Environment):
 	"""
 	Parses and return the command line arguments.
 	"""
-	def __init__(self):
-		# Default config file name
-		global default_config_path
+	def __init__(self, config: List[str], environment_path: str):
+		# Sanity check
+		if type(config) is list:
+			if len(config) > 0:
+				config_data_set = False
+				
+				try:
+					config_data = map(path_to_object, config)
+					config_data_set = True
+				except OSError:
+					report_error("io", "file probably does not exist")
+				except [TypeError, ValueError]:
+					report_error("parsing", "yaml syntax is probably incorrect")
+				
+				if config_data_set:
+					# Call superconstructor
+					super().__init__(config=config_data, environment_path=environment_path)
+					
+					# Return to terminate finidshing up of sanity check
+					return
 
-	
+		# If sanity check failed
+		self.lifecycle = False
+		report_error("arg", "the file environment arguments failed the sanity test")
+		return
 
-		# Create deployments
-		try:
-			for config_path in args.config:
-				with open(config_path) as config_file:
-					self.deployment.append(Deployment(config_path, load(config_file, Loader=BaseLoader), self.system))
-		except OSError:
-			report_error("io", config_path)
-		except [TypeError, ValueError]:
-			report_error("parsing", config_path)
-
+def path_to_object(config_path: str) -> Dict[str, Dict[str, Any]]:
+	with open(config_path) as config_file:
+		return load(config_file, Loader=BaseLoader)

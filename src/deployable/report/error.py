@@ -1,7 +1,7 @@
 """
 Module for error handling.
 """
-from ..defaults import error_break, error_list, error_label # Error messages and so on
+from deployable.report.defaults import error_break, error_list, error_label # Error messages and so on
 from sys import stderr # stderr
 
 """
