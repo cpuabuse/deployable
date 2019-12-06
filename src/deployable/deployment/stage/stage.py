@@ -4,12 +4,11 @@ Module containing the base stage class.
 
 from typing import Any, Dict  # For typing
 
-"""
-Base stage class.
-
-All of the classes extending this must provide the "run" and "dry" methods.
-"""
 class Stage:
+	"""
+	Base stage class.
+	All of the classes extending this must provide the "run" and "dry" methods.
+	"""
 	arg: str
 	config: Dict[str, Any]
 

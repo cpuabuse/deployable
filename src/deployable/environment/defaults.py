@@ -7,20 +7,20 @@ from yaml import BaseLoader, load  # To convert yaml to dict
 # Type id for file
 file_id = "file"
 
-"""
-Validates a file.
-"""
 def validate_file(text: str):
+	"""
+	Validates a file.
+	"""
 	try:
 		Path(text).resolve(strict=True)
 		return True
 	except:
 		return False
 
-"""
-Validates a string.
-"""
 def validate_string(text: str):
+	"""
+	Validates a string.
+	"""
 	try:
 		string_type: type = type(load(text, Loader=BaseLoader))
 		if (string_type == dict):
@@ -29,10 +29,10 @@ def validate_string(text: str):
 		pass
 	return False
 
-"""
-Validates a URL000.
-"""
 def validate_url(text: str):
+	"""
+	Validates a URL.
+	"""
 	prepared_request = PreparedRequest()
 	try:
 		prepared_request.prepare_url(text, None)

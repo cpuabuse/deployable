@@ -27,10 +27,10 @@ examples:
 {tab}{tab}deployable -c a.deployable.yml b.deployable.yml\
 """
 
-"""
-Provides help text.
-"""
 def get_help(text):
+	"""
+	Provides help text.
+	"""
 	override_flags_separator = "\", \""
 	override_flags = [f"--{type_item}" for type_item in types] + ["--type"]
 	help_text = {
@@ -46,7 +46,7 @@ if config files are not provided, or have different directories, defaults to "{d
 """,
 		"type" : f"""\
 types of config;
-if less arguments than "--config" is provided, rest would default to "--{file_id}";
+if less arguments than "--config" is provided, rest would default to "{file_id}";
 if more arguments than "--config" is provided, rest would be ignored;
 cannot be used at the same time as "{override_flags_separator.join([i for i in override_flags if i != "--type"])}"\
 """

@@ -7,19 +7,18 @@ from deployable.deployment.stage.echo import Echo # For stage
 from deployable.report.error import report_error # Error reporting
 from typing import Any, Dict, List  # For typing
 
-"""
-Class for deployment process from a deployment config.
-"""
 class Deployment:
+	"""
+	Class for deployment process from a deployment config.
+	"""
 	config: Dict[str, Any] = dict()
 	lifecycle: bool = True
 	stage: List[Stage] = list()
 	
-
-	"""
-	Creates an instance of Deployment.
-	"""
 	def __init__(self, config: List[Dict[str, Any]], system: Dict[str, str]):
+		"""
+		Creates an instance of Deployment.
+		"""
 		try:
 			# Initialize const
 			if "const" in config:

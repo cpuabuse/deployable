@@ -20,10 +20,10 @@ from deployable.environment.defaults import file_id, types # For arg processing
 from deployable.environment.file_environment import FileEnvironment # For creating of environment
 from typing import Any, List, Set, Tuple  # For typing
 
-"""
-Retrieves arguments from command line.
-"""
 def get_args() -> Tuple[Any]:
+	"""
+	Retrieves arguments from command line.
+	"""
 	# Create parser and groups
 	parser = ArgumentParser(description=description, epilog=epilog, formatter_class=RawDescriptionHelpFormatter)
 
@@ -68,11 +68,11 @@ def get_args() -> Tuple[Any]:
 	# Return the args
 	return args.config, args.dry, environment, arg_type
 	
-"""
-Guesses the type of the string.
-Performs the check for file the last.
-"""
 def guess_type(text: str):
+	"""
+	Guesses the type of the string.
+	Performs the check for file the last.
+	"""
 	for type_item in types:
 		if type_item != file_id:
 			if types[type_item]["validator"](text):
@@ -82,10 +82,11 @@ def guess_type(text: str):
 	else:
 		return None
 
-"""
-Entrypoint.
-"""
+
 def main() -> None:
+	"""
+	Entrypoint.
+	"""
 	# Get command line args
 	config: List(str)
 	dry: bool

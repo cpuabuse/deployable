@@ -7,6 +7,9 @@ from typing import Any, Dict # or typing
 
 
 class Echo(Stage):
+	"""
+	Simply echos data to console.
+	"""
 	def __init__(self, arg: str, config: Dict[str, Any]):
 		# Call superconstructor
 		super().__init__(arg, config)

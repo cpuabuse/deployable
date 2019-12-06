@@ -7,6 +7,9 @@ from deployable.report.error import report_error # For error reporting
 from typing import Any, Dict, List  # For typing
 
 class Environment:
+	"""
+	A single run of the program.
+	"""
 	# Contains deployments
 	deployment: List[Deployment] = list()
 	
@@ -16,10 +19,10 @@ class Environment:
 	# Contains system information
 	system: Dict[str, str]
 
-	"""
-	Constructor.
-	"""
 	def __init__(self, config: List[Dict[str, Any]], environment_path: str):
+		"""
+		Constructor.
+		"""
 		# Arguments sanity check
 		if type(environment_path) is not str or type(config) is not list:
 			self.lifecycle = False

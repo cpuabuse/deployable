@@ -11,14 +11,14 @@ from typing import Any, List, Dict # For typing
 from yaml import BaseLoader, load # To convert yaml to dict 
 
 
-"""
-Class for specifying the environment of operation.
-"""
 class FileEnvironment(Environment):
 	"""
-	Parses and return the command line arguments.
+	Class for specifying the environment of operation.
 	"""
 	def __init__(self, config: List[str], environment_path: str):
+		"""
+		Parses and return the command line arguments.
+		"""
 		# Sanity check
 		if type(config) is list:
 			if len(config) > 0:
@@ -45,5 +45,8 @@ class FileEnvironment(Environment):
 		return
 
 def path_to_object(config_path: str) -> Dict[str, Dict[str, Any]]:
+	"""
+	Loads yaml from a file.
+	"""
 	with open(config_path) as config_file:
 		return load(config_file, Loader=BaseLoader)
