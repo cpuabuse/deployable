@@ -91,7 +91,8 @@ def main() -> None:
 	config: List(str)
 	dry: bool
 	env_path: str
-	config, dry, env_path, type_of_config = get_args()
+	config_type: List(str)
+	config, dry, env_path, config_type = get_args()
 
 	print("Debug: exiting")
 
