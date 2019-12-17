@@ -18,7 +18,7 @@ from deployable.defaults import default_config_path, default_environment_path # 
 from deployable.defaults import description, epilog, get_help  # For help text and choices in arg parsing
 from deployable.environment.defaults import file_id, types # For arg processing
 from deployable.environment.file_environment import FileEnvironment # For creating of environment
-from typing import Any, List, Set, Tuple  # For typing
+from typing import Any, List, Optional, Set, Tuple  # For typing
 
 def get_args() -> Tuple[Any]:
 	"""
@@ -68,7 +68,7 @@ def get_args() -> Tuple[Any]:
 	# Return the args
 	return args.config, args.dry, environment, arg_type
 	
-def guess_type(text: str):
+def guess_type(text: str) -> Optional[str]:
 	"""
 	Guesses the type of the string.
 	Performs the check for file the last.
@@ -81,7 +81,6 @@ def guess_type(text: str):
 		return file_id
 	else:
 		return None
-
 
 def main() -> None:
 	"""
