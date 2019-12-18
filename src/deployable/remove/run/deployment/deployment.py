@@ -13,9 +13,10 @@ class Deployment:
 	"""
 	config: Dict[str, Any] = dict()
 	lifecycle: bool = True
+	name: str = deployment_name
 	stage: List[Stage] = list()
 	
-	def __init__(self, config: List[Dict[str, Any]], system: Dict[str, str]):
+	def __init__(self, config: List[Dict[str, Any]], system: Dict[str, str]) -> None:
 		"""
 		Creates an instance of Deployment.
 		"""
@@ -89,4 +90,12 @@ class Deployment:
 			report_error("arg", "the deployment arguments failed the sanity test by type")
 		except ValueError:
 			self.lifecycle = False
-			report_error("arg", "the deployment arguments failed the sanity test by value")	
+			report_error("arg", "the deployment arguments failed the sanity test by value")
+	
+	# Validator, that fails by default
+	def validate(self, id: str) -> bool:
+		"""
+		Dummy validator, fails by default.
+		To be replaced by classes extending it.
+		"""
+		return False

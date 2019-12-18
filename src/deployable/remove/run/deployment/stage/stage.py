@@ -13,6 +13,6 @@ class Stage:
 	config: Dict[str, Any]
 
 	# Constructor
-	def __init__(self, arg: str, config: Dict[str, Any]):
+	def __init__(self, arg: str, config: Dict[str, Any]) -> None:
 		self.arg = arg
 		self.config = config
