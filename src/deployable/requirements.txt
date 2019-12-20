@@ -1,3 +1,5 @@
 argparse
 pyyaml
 requests
+pathvalidate
+validators

@@ -7,8 +7,7 @@ class Deployment:
 		"""
 		Creates an instance of Deployment.
 		"""
-		
-	
+
 	# Validator, that fails by default
 	def validate(self, id: str) -> bool:
 		"""

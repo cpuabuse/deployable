@@ -1,9 +1,21 @@
+#!/usr/bin/env python3
+
 """
 Main module for the deployable project.
 """
 
 # Shared imports for bootstrap and normal use
-from pathlib import Path # For bootstrap and figuring out paths from args
+from typing import Any, List, Optional, Set, Tuple  # For typing
+# For creating of environment
+from deployable.environment.file_environment import FileEnvironment
+from deployable.environment.defaults import file_id, types  # For arg processing
+# For help text and choices in arg parsing
+from deployable.defaults import description, epilog, get_help
+# For using the default value in Environment creation
+from deployable.defaults import default_config_path, default_environment_path
+# For parsing arguments
+from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter
+from pathlib import Path  # For bootstrap and figuring out paths from args
 
 # Bootstrap to be able to perform absolute imports as standalone code
 if __name__ == "__main__":
@@ -13,30 +25,32 @@ if __name__ == "__main__":
 		path.append(current_path)
 
 # Normal imports
-from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter  # For parsing arguments
-from deployable.defaults import default_config_path, default_environment_path # For using the default value in Environment creation
-from deployable.defaults import description, epilog, get_help  # For help text and choices in arg parsing
-from deployable.environment.defaults import file_id, types # For arg processing
-from deployable.environment.file_environment import FileEnvironment # For creating of environment
-from typing import Any, List, Optional, Set, Tuple  # For typing
+
 
 def get_args() -> Tuple[Any]:
 	"""
 	Retrieves arguments from command line.
 	"""
 	# Create parser and groups
-	parser = ArgumentParser(description=description, epilog=epilog, formatter_class=RawDescriptionHelpFormatter)
+	parser = ArgumentParser(description=description, epilog=epilog,
+							formatter_class=RawDescriptionHelpFormatter)
 
 	# Add type overrides
 	type_override_group = parser.add_mutually_exclusive_group()
-	type_override_group.add_argument("-t", "--type", choices=[type_item for type_item in types], default=None, help=get_help("type"), nargs="*")  # The default value is required for "*" nargs to work with mutual exlusion
+	# The default value is required for "*" nargs to work with mutual exlusion
+	type_override_group.add_argument("-t", "--type", choices=[
+									type_item for type_item in types], default=None, help=get_help("type"), nargs="*")
 	for type_item in types:
-		type_override_group.add_argument(f"-{type_item[0]}", f"--{type_item}", action="store_true", default=False, help=get_help(type_item))
-	
+		type_override_group.add_argument(
+			f"-{type_item[0]}", f"--{type_item}", action="store_true", default=False, help=get_help(type_item))
+
 	# Add normal arguments
-	parser.add_argument("-c", "--config", nargs="*", type=str, help=get_help("config"), default=[default_config_path])
-	parser.add_argument("-d", "--dry", help=get_help("dry"), default=False, action="store_true")
-	parser.add_argument("-e", "--environment", type=str, help=get_help("environment"))
+	parser.add_argument("-c", "--config", nargs="*", type=str,
+						help=get_help("config"), default=[default_config_path])
+	parser.add_argument("-d", "--dry", help=get_help("dry"),
+						default=False, action="store_true")
+	parser.add_argument("-e", "--environment", type=str,
+						help=get_help("environment"))
 
 	# Generate the args object
 	args = parser.parse_args()
@@ -46,7 +60,8 @@ def get_args() -> Tuple[Any]:
 	if args.type != parser.get_default("type"):
 		for i in range(min(len(args.type), len(args.config))):
 			arg_type[i] = args.type[i]
-	force_types: List[str] = [type_item for type_item in types if getattr(args, type_item) == True]
+	force_types: List[str] = [
+		type_item for type_item in types if getattr(args, type_item) == True]
 	if len(force_types) == 1:
 		for i in range(len(arg_type)):
 			arg_type[i] = force_types[0]
@@ -59,7 +74,8 @@ def get_args() -> Tuple[Any]:
 	environment: str = None
 	if args.environment == parser.get_default("environment"):
 		environment = default_environment_path
-		config_set: Set[str] = set([Path(args.config[i]).parent.as_posix() for i in range(len(arg_type))])
+		config_set: Set[str] = set(
+			[Path(args.config[i]).parent.as_posix() for i in range(len(arg_type))])
 		if len(config_set) == 1:
 			environment = config_set.pop()
 	else:
@@ -67,7 +83,8 @@ def get_args() -> Tuple[Any]:
 
 	# Return the args
 	return args.config, args.dry, environment, arg_type
-	
+
+
 def guess_type(text: str) -> Optional[str]:
 	"""
 	Guesses the type of the string.
@@ -82,6 +99,7 @@ def guess_type(text: str) -> Optional[str]:
 	else:
 		return None
 
+
 def main() -> None:
 	"""
 	Entrypoint.
@@ -94,6 +112,7 @@ def main() -> None:
 	config, dry, env_path, config_type = get_args()
 
 	print("Debug: exiting")
+
 
 # Call main method
 if __name__ == "__main__":
