@@ -1,7 +1,3 @@
-trigger:
-  - master
-  - dev
-
 stages:
   - stage: dev
     jobs:
@@ -9,17 +5,17 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - pwsh: script/Test-Package.ps1
+          - pwsh: script/Invoke-DevDeployment.ps1
       - job: windows
         pool:
           vmImage: windows-latest
         steps:
-          - pwsh: script/Test-Package.ps1
+          - pwsh: script/Invoke-DevTest.ps1
       - job: macos
         pool:
           vmImage: macOS-latest
         steps:
-          - pwsh: script/Test-Package.ps1
+          - pwsh: script/Invoke-DevTest.ps1
 
   - stage: master
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -28,4 +24,4 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - pwsh: script/Test-Package.ps1
+          - pwsh: script/Invoke-MasterDeployment.ps1
