@@ -22,7 +22,7 @@ stages:
           - pwsh: script/Test-Package.ps1
 
   - stage: master
-    condition: and(eq(variables['build.sourceBranch'], 'refs/heads/master'))
+    condition: and(succeeded(), eq(variables["Build.SourceBranch"], "refs/heads/master"))
     jobs:
       - job: linux
         pool:
