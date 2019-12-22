@@ -1,0 +1,31 @@
+trigger:
+  - master
+  - dev
+
+stages:
+  - stage: dev
+    jobs:
+      - job: linux
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - pwsh: script/Test-Package.ps1
+      - job: windows
+        pool:
+          vmImage: windows-latest
+        steps:
+          - pwsh: script/Test-Package.ps1
+      - job: macos
+        pool:
+          vmImage: macOS-latest
+        steps:
+          - pwsh: script/Test-Package.ps1
+
+  - stage: master
+    condition: and(eq(variables['build.sourceBranch'], 'refs/heads/master'))
+    jobs:
+      - job: linux
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - pwsh: script/Test-Package.ps1
