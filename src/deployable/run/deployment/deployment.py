@@ -9,7 +9,8 @@ class Deployment:
 		"""
 
 	# Validator, that fails by default
-	def validate(self, id: str) -> bool:
+	@staticmethod
+	def validate(id: str) -> bool:
 		"""
 		Dummy validator, fails by default.
 		To be replaced by classes extending it.

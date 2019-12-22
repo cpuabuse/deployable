@@ -1,2 +1,0 @@
-# This file is for development dependencies
-pdoc3

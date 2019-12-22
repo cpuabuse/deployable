@@ -20,9 +20,9 @@ from pathlib import Path  # For bootstrap and figuring out paths from args
 # Bootstrap to be able to perform absolute imports as standalone code
 if __name__ == "__main__":
 	from sys import path
-	current_path: str = Path(__file__).parent.joinpath("..").as_posix()
-	if current_path not in path:
-		path.append(current_path)
+	parent_path: str = Path(__file__).parent.joinpath("..").as_posix()
+	if parent_path not in path:
+		path.append(parent_path)
 
 # Normal imports
 

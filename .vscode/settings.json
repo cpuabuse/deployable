@@ -1,6 +1,6 @@
 {
   "yaml.schemas": {
-    "src/schema/deployment.json": "/*"
+    "src/schema/deployment.json": "test/*"
   },
   "yaml.customTags": ["!template sequence", "!combine sequence"]
 }

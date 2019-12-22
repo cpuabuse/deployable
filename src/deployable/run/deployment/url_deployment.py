@@ -2,8 +2,7 @@ from deployable.run.deployment.deployment import Deployment
 from validators import url as validate_url, ValidationFailure
 from typing import Union
 
-
-class url_deployment(Deployment):
+class UrlDeployment(Deployment):
 	"""
 	Provides functionality for deployment from the url.
 	"""
