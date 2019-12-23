@@ -1,27 +1,61 @@
 stages:
   - stage: dev
     jobs:
-      - job: linux
+      - job: test
+        strategy:
+          matrix:
+            linux_36:
+              os: ubuntu-latest
+              python_version: "3.6"
+            linux_37:
+              os: ubuntu-latest
+              python_version: "3.7"
+            macos_36:
+              os: macOS-latest
+              python_version: "3.6"
+            macos_37:
+              os: macOS-latest
+              python_version: "3.7"
+            macos_38:
+              os: macOS-latest
+              python_version: "3.8"
+            windows_36:
+              os: windows-latest
+              python_version: "3.6"
+            windows_37:
+              os: windows-latest
+              python_version: "3.7"
+            windows_38:
+              os: windows-latest
+              python_version: "3.8"
+        pool:
+          vmImage: $(os)
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: $(python_version)
+          - pwsh: script/Invoke-DevTest.ps1
+      - deployment: deploy
+        dependsOn: test
         pool:
           vmImage: ubuntu-latest
-        steps:
-          - pwsh: script/Invoke-DevDeployment.ps1
-      - job: windows
-        pool:
-          vmImage: windows-latest
-        steps:
-          - pwsh: script/Invoke-DevTest.ps1
-      - job: macos
-        pool:
-          vmImage: macOS-latest
-        steps:
-          - pwsh: script/Invoke-DevTest.ps1
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: UsePythonVersion@0
+                inputs:
+                  versionSpec: "3.8"
+              - pwsh: script/Invoke-DevDeployment.ps1
 
   - stage: master
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     jobs:
-      - job: linux
+      - job: deployment
         pool:
           vmImage: ubuntu-latest
         steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.8"
           - pwsh: script/Invoke-MasterDeployment.ps1
