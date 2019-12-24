@@ -34,7 +34,7 @@ stages:
           - task: UsePythonVersion@0
             inputs:
               versionSpec: $(python_version)
-          - pwsh: script/pipeline/Invoke-Test.ps1
+          - pwsh: script/Invoke-Test.ps1
   - stage: deploy
     jobs:
       - deployment: coverage
@@ -48,7 +48,7 @@ stages:
               - task: UsePythonVersion@0
                 inputs:
                   versionSpec: '3.8'
-              - pwsh: script/pipeline/Invoke-CoverageDeployment.ps1
+              - pwsh: script/Invoke-CoverageDeployment.ps1
       - deployment: pypi
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         environment: pypi
@@ -61,4 +61,4 @@ stages:
               - task: UsePythonVersion@0
                 inputs:
                   versionSpec: '3.8'
-              - pwsh: script/pipeline/Invoke-DistributionDeployment.ps1
+              - pwsh: script/Invoke-DistributionDeployment.ps1

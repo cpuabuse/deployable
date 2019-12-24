@@ -6,7 +6,7 @@ if ($null -eq (Get-Variable -Name "StartPipeline" -Scope "Script" -ErrorAction "
 	# Guard
 	New-Variable -Name "StartPipeline" -Scope "Script"
 
-	Push-Location -Path $(Join-Path -Path $PSScriptRoot -ChildPath ".." ".." -Resolve)
+	Push-Location -Path $(Join-Path -Path $PSScriptRoot -ChildPath ".." ".." ".." -Resolve)
 
 	[ValidateNotNull()][hashtable]$script:Paths += @{
 		DeployCoverage      = Join-Path -Path "./" -ChildPath "script" "common" "Deploy-Coverage.ps1" -Resolve;
