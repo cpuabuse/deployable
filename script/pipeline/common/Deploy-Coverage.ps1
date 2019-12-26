@@ -4,7 +4,7 @@
 [ValidateNotNullOrEmpty()][String]$Executable = "cc-test-reporter"
 
 # Url location
-[ValidateNotNullOrEmpty()][String]$CodeClimateUrl = https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+[ValidateNotNullOrEmpty()][String]$CodeClimateUrl = "https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64"
 
 # Download reporter
 Invoke-WebRequest -Uri $CodeClimateUrl -OutFile $Executable
