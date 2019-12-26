@@ -10,6 +10,9 @@ stages:
             linux_37:
               os: ubuntu-latest
               python_version: '3.7'
+            linux_38:
+              os: ubuntu-latest
+              python_version: '3.8'
             macos_36:
               os: macOS-latest
               python_version: '3.6'
@@ -48,7 +51,11 @@ stages:
               - task: UsePythonVersion@0
                 inputs:
                   versionSpec: '3.8'
-              - pwsh: script/pipeline/Invoke-CoverageDeployment.ps1
+              - task: PowerShell@2
+                inputs:
+                  pwsh: true
+                  targetType: filePath
+                  filePath: script/pipeline/Invoke-CoverageDeployment.ps1
       - deployment: pypi
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         environment: pypi
