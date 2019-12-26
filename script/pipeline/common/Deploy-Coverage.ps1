@@ -9,6 +9,10 @@
 # Download reporter
 Invoke-WebRequest -Uri $CodeClimateUrl -OutFile $Executable
 
+ls
+
+./cc-test-reporter
+
 # Deploy
 & $Executable "before-build"
 
