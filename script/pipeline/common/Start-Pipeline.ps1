@@ -6,12 +6,12 @@ if ($null -eq (Get-Variable -Name "StartPipeline" -Scope "Script" -ErrorAction "
 	# Guard
 	New-Variable -Name "StartPipeline" -Scope "Script"
 
-	Push-Location -Path $(Join-Path -Path $PSScriptRoot -ChildPath ".." ".." ".." -Resolve)
+	Push-Location -Path $(Join-Path -Path $PSScriptRoot -ChildPath ".." ".." "..")
 
 	[ValidateNotNull()][hashtable]$script:Paths += @{
-		DeployCoverage      = Join-Path -Path "script" -ChildPath "pipeline" "common" "Deploy-Coverage.ps1" -Resolve;
-		InstallDependencies = Join-Path -Path "script" -ChildPath "pipeline" "common" "Install-Dependencies.ps1" -Resolve;
-		StopPipeline        = Join-Path -Path "script" -ChildPath "pipeline" "common" "Stop-Pipeline.ps1" -Resolve;
-		RequirementsPath    = Join-Path -Path "requirements" -ChildPath "dev.txt" -Resolve
+		DeployCoverage      = Join-Path -Path "script" -ChildPath "pipeline" "common" "Deploy-Coverage.ps1";
+		InstallDependencies = Join-Path -Path "script" -ChildPath "pipeline" "common" "Install-Dependencies.ps1";
+		StopPipeline        = Join-Path -Path "script" -ChildPath "pipeline" "common" "Stop-Pipeline.ps1";
+		RequirementsPath    = Join-Path -Path "requirements" -ChildPath "dev.txt"
 	}
 }
