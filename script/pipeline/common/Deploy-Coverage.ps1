@@ -1,7 +1,7 @@
 # To be run from a repository root
 
 # Executable name
-[ValidateNotNullOrEmpty()][String]$Executable = "cc-test-reporter"
+[ValidateNotNullOrEmpty()][String]$ExecutablePath = Join-Path -Path "." -ChildPath "cc-test-reporter" -Resolve;
 
 # Url location
 [ValidateNotNullOrEmpty()][String]$CodeClimateUrl = "https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64"
@@ -9,14 +9,10 @@
 # Download reporter
 Invoke-WebRequest -Uri $CodeClimateUrl -OutFile $Executable
 
-ls
-
-./cc-test-reporter
-
 # Deploy
-& $Executable "before-build"
+& $ExecutablePath "before-build"
 
 # Run test
 coverage run -m pytest
 
-& $Executable "after-build" --input-type "coverage.py" --exit-code $?
+& $ExecutablePath "after-build" --input-type "coverage.py" --exit-code $?
