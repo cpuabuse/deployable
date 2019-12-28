@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 # File is to be dot-sourced
 
 if ($null -ne (Get-Variable -Name "StartPipeline" -Scope "Script" -ErrorAction "Ignore")) {

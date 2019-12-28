@@ -52,7 +52,7 @@ stages:
               - task: UsePythonVersion@0
                 inputs:
                   versionSpec: '3.8'
-              - pwsh: script/pipeline/Invoke-CoverageDeployment.ps1
+              - pwsh: script/pipeline/Invoke-CodeClimateDeployment.ps1
                 env:
                   CC_TEST_REPORTER_ID: $(CodeClimateReporterId)
       - deployment: pypi
