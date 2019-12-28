@@ -9,4 +9,4 @@ $BashWrapper = if ($IsWindows) { $Paths.BashWrapper -replace '\\', '/' } else { 
 [ValidateNotNullOrEmpty()][string]$EffectiveArgument = $Argument
 
 # Call bash; Interactive option for connecting streams to console and reading .bashrc
-bash -i $BashWrapper $EffectiveArgument; if (-not $?) { throw }
+bash -l $BashWrapper $EffectiveArgument; if (-not $?) { throw }

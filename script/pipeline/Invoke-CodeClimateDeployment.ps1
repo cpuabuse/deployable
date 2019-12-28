@@ -27,13 +27,15 @@ function Invoke-PipelineCommand {
 		throw
 	}
 
+	# Get effective argument
+	[ValidateNotNullOrEmpty()][String]$EffectiveArgument = ($Arguments -join " ")
+
 	if ($IsWindows) {
-		& $Paths.InvokeBashWrapper -Argument ($Arguments -join " ")
+		& $Paths.InvokeBashWrapper -Argument $EffectiveArgument
 	}
 	else {
-		# $Rest would be assigned to empty string if $Arguments has one element, but the behaviour is not documented, so no validation on $Rest
-		[ValidateNotNullOrEmpty()][String]$First, [String[]]$Rest = $Arguments
-		& $First $Rest
+		# Call operator does not work for PS scripts, where the flag is a variable
+		Invoke-Expression $EffectiveArgument
 	}
 }
 

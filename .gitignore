@@ -1,5 +1,5 @@
 cc-test-reporter
 .coverage
-.coverage.xml
+coverage.xml
 __pycache__
 .pytest_cache
