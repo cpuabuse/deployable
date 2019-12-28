@@ -5,7 +5,7 @@
 & $Paths.InstallDependencies -FilePath $Paths.RequirementsPath
 
 # Coverage
-& $Paths.DeployCoverage
+bash $Paths.DeployCoverage; if (-not $?) { throw }
 
 # Stop-Pipeline
 $Paths.StopPipeline

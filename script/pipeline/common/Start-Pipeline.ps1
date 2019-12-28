@@ -5,7 +5,7 @@ if ($null -eq (Get-Variable -Name "StartPipeline" -Scope "Script" -ErrorAction "
 	New-Variable -Name "StartPipeline" -Scope "Script"
 
 	# Set the error action
-	$ErrorActionPreferenceOriginal = $ErrorActionPreference
+	$script:ErrorActionPreferenceOriginal = $ErrorActionPreference
 	$ErrorActionPreference = "Stop"
 
 	# Change path to repo root
@@ -13,7 +13,7 @@ if ($null -eq (Get-Variable -Name "StartPipeline" -Scope "Script" -ErrorAction "
 
 	# Create paths hashtable
 	[ValidateNotNull()][hashtable]$script:Paths += @{
-		DeployCoverage      = Join-Path -Path "script" -ChildPath "pipeline" "common" "Deploy-Coverage.ps1";
+		DeployCoverage      = Join-Path -Path "script" -ChildPath "pipeline" "common" "deploy_coverage.sh";
 		InstallDependencies = Join-Path -Path "script" -ChildPath "pipeline" "common" "Install-Dependencies.ps1";
 		StopPipeline        = Join-Path -Path "script" -ChildPath "pipeline" "common" "Stop-Pipeline.ps1";
 		RequirementsPath    = Join-Path -Path "requirements" -ChildPath "dev.txt"
