@@ -3,7 +3,7 @@
 # Currently supports only Linux and Windows with WSL deployment.
 
 # Start-Pipeline
-. $(Join-Path -Path $PSScriptRoot -ChildPath "common" "Start-Pipeline.ps1" -Resolve)
+. $(Join-Path -Path $PSScriptRoot -ChildPath "common" "Start-Pipeline.ps1")
 
 # Executable name; Url location; Download reporter
 [ValidateNotNullOrEmpty()][String]$ExecutablePath = Join-Path -Path "." -ChildPath "cc-test-reporter"
