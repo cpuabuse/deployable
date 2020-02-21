@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # File is to be dot-sourced
 
-if ($null -eq (Get-Variable -Name "StartPipeline" -Scope "Script" -ErrorAction "Ignore")) {
+if ($null -eq (Get-Variable -Name "StartPipelineGuard" -Scope "Script" -ErrorAction "Ignore")) {
 	# Guard
 	New-Variable -Name "StartPipeline" -Scope "Script"
 

@@ -12,3 +12,6 @@ if parent_path not in path:
 # Namespace
 from pkgutil import extend_path
 __path__ = extend_path(__path__, __name__)
+
+# Version
+from deployable.version import __version__

@@ -1,3 +1,4 @@
+absolute-import
 argparse
 pyyaml
 requests

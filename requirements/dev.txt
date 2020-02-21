@@ -1,4 +1,6 @@
 -r common.txt
+bump2version
 coverage
 pdoc3
 pytest
+setuptools
