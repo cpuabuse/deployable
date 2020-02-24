@@ -9,20 +9,14 @@ from pathlib import Path  # For bootstrap and figuring out paths from args
 
 # Bootstrap to be able to perform absolute imports as standalone code
 if __name__ == "__main__":
-	from sys import path
-	parent_path: str = Path(__file__).parent.joinpath("..").as_posix()
-	if parent_path not in path:
-		path.append(parent_path)
+	from absolute_import import absolute_import
+	absolute_import(file=__file__, name=__name__, path=__path__)
 
-from typing import Any, List, Optional, Set, Tuple  # For typing
-# For creating of environment
+from typing import Any, List, Optional, Set, Tuple
 from deployable.environment.file_environment import FileEnvironment
-from deployable.environment.defaults import file_id, types  # For arg processing
-# For help text and choices in arg parsing
+from deployable.environment.defaults import file_id, types
 from deployable.defaults import description, epilog, get_help
-# For using the default value in Environment creation
 from deployable.defaults import default_config_path, default_environment_path
-# For parsing arguments
 from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter
 
 
@@ -35,23 +29,24 @@ def get_args() -> Tuple[Any]:
 	"""
 	# Create parser and groups
 	parser = ArgumentParser(description=description, epilog=epilog,
-							formatter_class=RawDescriptionHelpFormatter)
+                         formatter_class=RawDescriptionHelpFormatter)
 
 	# Add type overrides
 	type_override_group = parser.add_mutually_exclusive_group()
 	# The default value is required for "*" nargs to work with mutual exlusion
-	type_override_group.add_argument("-t", "--type", choices=[type_item for type_item in types], default=None, help=get_help("type"), nargs="*")
+	type_override_group.add_argument(
+		"-t", "--type", choices=[type_item for type_item in types], default=None, help=get_help("type"), nargs="*")
 	for type_item in types:
 		type_override_group.add_argument(
 			f"-{type_item[0]}", f"--{type_item}", action="store_true", default=False, help=get_help(type_item))
 
 	# Add normal arguments
 	parser.add_argument("-c", "--config", nargs="*", type=str,
-						help=get_help("config"), default=[default_config_path])
+                     help=get_help("config"), default=[default_config_path])
 	parser.add_argument("-d", "--dry", help=get_help("dry"),
-						default=False, action="store_true")
+                     default=False, action="store_true")
 	parser.add_argument("-e", "--environment", type=str,
-						help=get_help("environment"))
+                     help=get_help("environment"))
 
 	# Generate the args object
 	args = parser.parse_args()
