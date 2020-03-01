@@ -1,3 +1,13 @@
+"""
+Generic deployment information.
+"""
+
+from typing import List
+from deployable.run.deployment.file_deployment import FileDeployment
+from deployable.run.deployment.string_deployment import StringDeployment
+from deployable.run.deployment.url_deployment import URLDeployment
+
+
 class Deployment:
 	"""
 	Class for deployment process from a deployment config.
@@ -16,3 +26,6 @@ class Deployment:
 		To be replaced by classes extending it.
 		"""
 		return False
+
+
+deployment_types: List[Deployment] = [FileDeployment, StringDeployment, URLDeployment]

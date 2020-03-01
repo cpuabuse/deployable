@@ -6,6 +6,7 @@ class FileDeployment(Deployment):
 	"""
 	Provides functionality for deployment from the file.
 	"""
+	name = "file"
 
 	def __init__(self):
 		"""

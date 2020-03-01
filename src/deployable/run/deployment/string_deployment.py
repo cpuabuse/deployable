@@ -1,10 +1,12 @@
 from deployable.run.deployment.deployment import Deployment
 from yaml import BaseLoader, load, YAMLError
 
+
 class StringDeployment(Deployment):
 	"""
 	Provides functionality for deployment from the string.
 	"""
+	name = "string"
 
 	def __init__(self):
 		"""
