@@ -39,6 +39,7 @@ stages:
               versionSpec: $(python_version)
           - pwsh: script/pipeline/Invoke-Test.ps1
   - stage: deploy
+    condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/dev'))
     jobs:
       - deployment: coverage
         environment: coverage
